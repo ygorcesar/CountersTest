@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainContainerError"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/errorViewTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_normal_3"
+        android:layout_marginTop="@dimen/margin_normal_1"
+        android:layout_marginEnd="@dimen/margin_normal_3"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:text="@string/error_default_title"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_size_bigger" />
+
+    <TextView
+        android:id="@+id/errorViewDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_normal_3"
+        android:layout_marginTop="@dimen/margin_min_1"
+        android:layout_marginEnd="@dimen/margin_normal_3"
+        android:gravity="center"
+        android:text="@string/error_default_description"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/font_size_medium_2" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/errorViewButton"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal_1"
+        android:text="@string/retry"
+        android:textColor="@color/orange" />
+
+</merge>

@@ -3,7 +3,7 @@ package com.cornershop.counterstest.di
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
-import com.cornershop.counterstest.utils.DataStore
+import com.cornershop.counterstest.utils.data.DataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

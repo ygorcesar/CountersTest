@@ -28,9 +28,11 @@
 —Willie Nelson</string>
     <string name="search_counters">Search Counters</string>
     <string name="add_counters">Add counters</string>
-    <string name="n_items">%d items</string>
-    <string name="n_times">%d times</string>
+    <string name="n_items">%1$d items</string>
+    <string name="n_times">%1$d times</string>
     <string name="n_selected">%d selected</string>
+    <string name="error_default_title">Opssss!</string>
+    <string name="error_default_description">Something went wrong =S</string>
     <string name="error_load_counters_title">Couldn’t load the counters</string>
     <string name="error_creating_counter_title">Couldn’t create the counter</string>
     <string name="error_updating_counter_title">Couldn’t update the “%s” counter to %d</string>

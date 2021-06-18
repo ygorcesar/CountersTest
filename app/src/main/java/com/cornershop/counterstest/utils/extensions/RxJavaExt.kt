@@ -1,10 +1,12 @@
-package com.cornershop.counterstest.utils
+package com.cornershop.counterstest.utils.extensions
 
 import androidx.lifecycle.MutableLiveData
+import com.cornershop.counterstest.utils.data.StateMachineEvent
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import timber.log.Timber
 
 fun <T> Single<T>.performOnBack(): Single<T> {
     return this.subscribeOn(Schedulers.io())
@@ -24,6 +26,7 @@ fun <T> Single<T>.subscribe(
             onSuccess(response)
             responseState.postValue(StateMachineEvent.Success(response))
         }, { error ->
+            Timber.e(error)
             onError(error)
             responseState.postValue(StateMachineEvent.Failure(error))
         })

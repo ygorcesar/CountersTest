@@ -1,9 +1,9 @@
 package com.cornershop.counterstest.counter.data
 
 import com.cornershop.counterstest.counter.model.Counter
-import com.cornershop.counterstest.utils.DataStore
-import com.cornershop.counterstest.utils.NetworkHandler
-import com.cornershop.counterstest.utils.request
+import com.cornershop.counterstest.utils.data.DataStore
+import com.cornershop.counterstest.utils.data.NetworkHandler
+import com.cornershop.counterstest.utils.data.request
 import io.reactivex.Single
 import javax.inject.Inject
 

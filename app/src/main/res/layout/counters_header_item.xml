@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingHorizontal="@dimen/margin_normal_3"
+    android:paddingVertical="@dimen/margin_normal_1">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/counterHeaderItemsAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_min_1"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        tools:text="4 items" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/counterHeaderTimes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gray"
+        tools:text="17 times" />
+
+</LinearLayout>

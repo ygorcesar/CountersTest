@@ -6,4 +6,12 @@
     <dimen name="margin_normal_1">16dp</dimen>
     <dimen name="margin_normal_2">24dp</dimen>
     <dimen name="margin_normal_3">32dp</dimen>
+    <dimen name="margin_min_1">8dp</dimen>
+
+    <dimen name="font_size_medium">16sp</dimen>
+    <dimen name="font_size_medium_2">18sp</dimen>
+    <dimen name="font_size_big">20sp</dimen>
+    <dimen name="font_size_bigger">22sp</dimen>
+
+    <dimen name="default_corner_radius">8dp</dimen>
 </resources>

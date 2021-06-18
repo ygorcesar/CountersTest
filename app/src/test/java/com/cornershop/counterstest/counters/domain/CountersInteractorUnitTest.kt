@@ -7,13 +7,12 @@ import com.cornershop.counterstest.counter.data.CounterRequestAdd
 import com.cornershop.counterstest.counter.domain.CounterBusiness
 import com.cornershop.counterstest.counter.domain.CountersInteractor
 import com.cornershop.counterstest.counter.model.Counter
-import com.cornershop.counterstest.utils.NetworkError
+import com.cornershop.counterstest.utils.data.NetworkError
 import com.cornershop.counterstest.utils.assertCompleted
 import com.cornershop.counterstest.utils.assertWithError
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.reactivex.Single
-import io.reactivex.functions.Predicate
 import org.junit.Before
 import org.junit.Test
 

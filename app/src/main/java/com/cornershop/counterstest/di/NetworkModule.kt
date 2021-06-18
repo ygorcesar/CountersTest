@@ -2,9 +2,9 @@ package com.cornershop.counterstest.di
 
 import android.content.Context
 import com.cornershop.counterstest.BuildConfig
-import com.cornershop.counterstest.utils.HttpError
-import com.cornershop.counterstest.utils.NetworkHandler
-import com.cornershop.counterstest.utils.UnauthorizedError
+import com.cornershop.counterstest.utils.data.HttpError
+import com.cornershop.counterstest.utils.data.NetworkHandler
+import com.cornershop.counterstest.utils.data.UnauthorizedError
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -13,7 +13,6 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Response

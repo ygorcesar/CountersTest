@@ -1,4 +1,4 @@
-package com.cornershop.counterstest.utils
+package com.cornershop.counterstest.utils.data
 
 import android.content.SharedPreferences
 import kotlinx.serialization.decodeFromString

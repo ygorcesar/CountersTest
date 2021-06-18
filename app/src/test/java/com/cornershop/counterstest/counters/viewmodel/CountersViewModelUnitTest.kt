@@ -4,8 +4,8 @@ import com.cornershop.counterstest.base.BaseViewModelTests
 import com.cornershop.counterstest.counter.domain.CountersInteractor
 import com.cornershop.counterstest.counter.model.Counter
 import com.cornershop.counterstest.counter.viewmodel.CountersViewModel
-import com.cornershop.counterstest.utils.NetworkError
-import com.cornershop.counterstest.utils.StateMachineEvent
+import com.cornershop.counterstest.utils.data.NetworkError
+import com.cornershop.counterstest.utils.data.StateMachineEvent
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.reactivex.Single
@@ -38,14 +38,14 @@ class CountersViewModelUnitTest : BaseViewModelTests() {
         // when
         viewModel.getCounters()
 
-        assertThat(viewModel.responseState.value)
+        assertThat(viewModel.countersState.value)
             .isExactlyInstanceOf(StateMachineEvent.Start.javaClass)
 
         publish.onSuccess(expected)
 
         // then
-        val result = viewModel.responseState.value as StateMachineEvent.Success<List<Counter>>
-        assertThat(viewModel.responseState.value).isExactlyInstanceOf(result.javaClass)
+        val result = viewModel.countersState.value as StateMachineEvent.Success<List<Counter>>
+        assertThat(viewModel.countersState.value).isExactlyInstanceOf(result.javaClass)
         assertEquals(result.value, expected)
     }
 
@@ -59,14 +59,14 @@ class CountersViewModelUnitTest : BaseViewModelTests() {
         // when
         viewModel.getCounters()
 
-        assertThat(viewModel.responseState.value)
+        assertThat(viewModel.countersState.value)
             .isExactlyInstanceOf(StateMachineEvent.Start.javaClass)
 
         publish.onError(expectedException)
 
         // then
-        val result = viewModel.responseState.value as StateMachineEvent.Failure
-        assertThat(viewModel.responseState.value).isExactlyInstanceOf(result.javaClass)
+        val result = viewModel.countersState.value as StateMachineEvent.Failure
+        assertThat(viewModel.countersState.value).isExactlyInstanceOf(result.javaClass)
         assertEquals(result.exception, expectedException)
     }
 

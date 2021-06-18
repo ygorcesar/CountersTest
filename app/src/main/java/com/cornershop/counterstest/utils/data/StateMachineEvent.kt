@@ -1,4 +1,4 @@
-package com.cornershop.counterstest.utils
+package com.cornershop.counterstest.utils.data
 
 sealed class StateMachineEvent<out T> {
     object Start : StateMachineEvent<Nothing>()

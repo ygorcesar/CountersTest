@@ -1,8 +1,9 @@
-package com.cornershop.counterstest.utils
+package com.cornershop.counterstest.utils.data
 
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import com.cornershop.counterstest.utils.extensions.performOnBack
 import io.reactivex.Single
 
 /**

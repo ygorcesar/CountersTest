@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/margin_normal_3">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_min_1"
+        android:layout_marginBottom="@dimen/margin_normal_1"
+        android:text="@string/no_counters"
+        android:textColor="@color/black"
+        android:textSize="@dimen/font_size_bigger" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/no_counters_phrase"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/font_size_medium_2" />
+
+</LinearLayout>

@@ -1,4 +1,4 @@
-package com.cornershop.counterstest.utils
+package com.cornershop.counterstest.utils.data
 
 open class CountersException(message: String = "") : RuntimeException(message)
 

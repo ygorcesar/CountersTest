@@ -97,8 +97,11 @@ ext {
     // region development dependencies
     rxJavaVersion = '2.2.21'
     timberVersion = '4.7.1'
+    groupieVersion = '2.9.0'
     rxJava = "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
     timber = "com.jakewharton.timber:timber:${timberVersion}"
+    groupie = "com.github.lisawray.groupie:groupie:${groupieVersion}"
+    groupieViewBinding = "com.github.lisawray.groupie:groupie-viewbinding:${groupieVersion}"
     //endregion
 
     androidDependencies = [
@@ -133,6 +136,8 @@ ext {
     developmentDependencies = [
             [configuration: "implementation", dependency: rxJava],
             [configuration: "implementation", dependency: timber],
+            [configuration: "implementation", dependency: groupie],
+            [configuration: "implementation", dependency: groupieViewBinding],
     ]
 
     unitTestDependencies = [

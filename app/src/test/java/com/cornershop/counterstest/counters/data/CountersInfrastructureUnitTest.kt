@@ -4,6 +4,9 @@ import com.cornershop.counterstest.base.BaseTests
 import com.cornershop.counterstest.counter.data.*
 import com.cornershop.counterstest.counter.model.Counter
 import com.cornershop.counterstest.utils.*
+import com.cornershop.counterstest.utils.data.DataStore
+import com.cornershop.counterstest.utils.data.NetworkError
+import com.cornershop.counterstest.utils.data.NetworkHandler
 import io.mockk.Called
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
