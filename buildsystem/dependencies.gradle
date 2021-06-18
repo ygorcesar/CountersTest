@@ -1,0 +1,162 @@
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
+}
+
+subprojects {
+    configurations.all {
+        resolutionStrategy {
+            forcedModules = [
+                    "org.jetbrains.kotlin:kotlin-stdlib:${kotlin_version}",
+                    "org.jetbrains.kotlin:kotlin-reflect:${kotlin_version}",
+            ]
+        }
+    }
+}
+
+ext {
+
+    // region android libraries
+    lifecycleVersion = "2.3.1"
+    archVersion = "2.1.0"
+    appCompatVersion = '1.2.0'
+    androidLibraryVersion = '1.0.0'
+    recyclerViewVersion = '1.1.0'
+    materialDesignVersion = '1.3.0'
+    constraintLayoutVersion = '2.0.4'
+    androidActivityKtxVersion = '1.2.3'
+    androidCoreKtxVersion = '1.5.0'
+
+    appCompat = "androidx.appcompat:appcompat:${appCompatVersion}"
+    materialDesign = "com.google.android.material:material:${materialDesignVersion}"
+    androidRecyclerView = "androidx.recyclerview:recyclerview:${recyclerViewVersion}"
+    constraintLayout = "androidx.constraintlayout:constraintlayout:${constraintLayoutVersion}"
+    lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+    lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+    androidActivityKtx = "androidx.activity:activity-ktx:${androidActivityKtxVersion}"
+    androidCoreKtx = "androidx.core:core-ktx:${androidCoreKtxVersion}"
+    //endregion
+
+    // region kotlin
+    kotlinSerializationVersion = '1.2.1'
+
+    kotlinJdk = "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    kotlinSerialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:${kotlinSerializationVersion}"
+    //endregion
+
+    // region data and network
+    retrofitVersion = '2.9.0'
+    okHttpVersion = '4.9.1'
+    okHttpConverterVersion = '0.8.0'
+    rxJavaVersion = '2.2.21'
+
+    retrofit = "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    retrofitRxAdapter = "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}"
+    okHttp = "com.squareup.okhttp3:okhttp:${okHttpVersion}"
+    okHttpInterceptor = "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}"
+    okHttpConverter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${okHttpConverterVersion}"
+    rxJava = "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
+    //endregion
+
+    // region dependency injection
+    hiltVersion = '2.37'
+
+    hilt = "com.google.dagger:hilt-android:${hiltVersion}"
+    hiltCompiler = "com.google.dagger:hilt-compiler:${hiltVersion}"
+    hiltTesting = "com.google.dagger:hilt-android-testing:${hiltVersion}"
+    //endregion
+
+    // region test dependencies
+    androidTestVersion = '1.3.0'
+    assertJVersion = '3.20.0'
+    junitVersion = '1.1.2'
+    mockkVersion = '1.10.0'
+    espressoVersion = '3.3.0'
+    baristaVersion = '3.9.0'
+
+    junit = "androidx.test.ext:junit:${junitVersion}"
+    assertj = "org.assertj:assertj-core:${assertJVersion}"
+    androidRules = "androidx.test:rules:${androidTestVersion}"
+    lifecycleCoreTesting = "androidx.arch.core:core-testing:${archVersion}"
+
+    mockk = "io.mockk:mockk:${mockkVersion}"
+    mockWebServer = "com.squareup.okhttp3:mockwebserver:${okHttpVersion}"
+
+    //android test dependencies
+    espressoCore = "androidx.test.espresso:espresso-core:${espressoVersion}"
+    espressoContrib = "androidx.test.espresso:espresso-contrib:${espressoVersion}"
+    espressoIntents = "androidx.test.espresso:espresso-intents:${espressoVersion}"
+
+    androidOrchestrator = "androidx.test:orchestrator:${androidTestVersion}"
+    barista = "com.schibsted.spain:barista:${baristaVersion}"
+    mockkAndroid = "io.mockk:mockk-android:${mockkVersion}"
+    //endregion
+
+    // region development dependencies
+    timberVersion = '4.7.1'
+    timber = "com.jakewharton.timber:timber:${timberVersion}"
+    //endregion
+
+    androidDependencies = [
+            [configuration: "implementation", dependency: appCompat],
+            [configuration: "implementation", dependency: materialDesign],
+            [configuration: "implementation", dependency: androidRecyclerView],
+            [configuration: "implementation", dependency: constraintLayout],
+            [configuration: "implementation", dependency: lifecycleViewModel],
+            [configuration: "implementation", dependency: lifecycleLiveData],
+            [configuration: "implementation", dependency: androidActivityKtx],
+            [configuration: "implementation", dependency: androidCoreKtx],
+    ]
+
+    kotlinDependencies = [
+            [configuration: "implementation", dependency: kotlinJdk],
+            [configuration: "implementation", dependency: kotlinSerialization],
+    ]
+
+    networkDependencies = [
+            [configuration: "implementation", dependency: retrofit],
+            [configuration: "implementation", dependency: retrofitRxAdapter],
+            [configuration: "implementation", dependency: okHttp],
+            [configuration: "implementation", dependency: okHttpInterceptor],
+            [configuration: "implementation", dependency: okHttpConverter],
+    ]
+
+    hiltDependencies = [
+            [configuration: "implementation", dependency: hilt],
+            [configuration: "kapt", dependency: hiltCompiler],
+    ]
+
+    developmentDependencies = [
+            [configuration: "implementation", dependency: timber],
+    ]
+
+    unitTestDependencies = [
+            [configuration: "testImplementation", dependency: junit],
+            [configuration: "testImplementation", dependency: mockk],
+            [configuration: "testImplementation", dependency: mockWebServer],
+            [configuration: "testImplementation", dependency: assertj],
+            [configuration: "testImplementation", dependency: lifecycleCoreTesting],
+            [configuration: "testImplementation", dependency: hiltTesting],
+            [configuration: "kaptTest", dependency: hiltCompiler],
+    ]
+
+    androidTestDependencies = [
+            [configuration: "androidTestImplementation", dependency: junit],
+            [configuration: "androidTestImplementation", dependency: assertj],
+            [configuration: "androidTestImplementation", dependency: androidRules],
+            [configuration: "androidTestImplementation", dependency: lifecycleCoreTesting],
+            [configuration: "androidTestImplementation", dependency: mockkAndroid],
+            [configuration: "androidTestImplementation", dependency: mockWebServer],
+            [configuration: "androidTestImplementation", dependency: espressoCore],
+            [configuration: "androidTestImplementation", dependency: espressoContrib],
+            [configuration: "androidTestImplementation", dependency: espressoIntents],
+            [configuration: "androidTestImplementation", dependency: barista],
+            [configuration: "androidTestImplementation", dependency: hiltTesting],
+            [configuration: "kaptAndroidTest", dependency: hiltCompiler],
+            [configuration: "androidTestUtil", dependency: androidOrchestrator],
+    ]
+}

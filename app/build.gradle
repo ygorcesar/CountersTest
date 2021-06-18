@@ -1,0 +1,120 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    def androidConfig = rootProject.ext.android
+    def endpoints = rootProject.ext.endpoints
+
+    compileSdkVersion androidConfig.compileSdkVersion
+    buildToolsVersion androidConfig.buildToolsVersion
+
+    defaultConfig {
+        applicationId androidConfig.applicationId
+        minSdkVersion androidConfig.minSdkVersion
+        targetSdkVersion androidConfig.targetSdkVersion
+        versionCode androidConfig.versionCode
+        versionName androidConfig.versionName
+
+        testInstrumentationRunnerArguments clearPackageData: 'true'
+
+        vectorDrawables.useSupportLibrary = true
+
+        resConfigs 'en', 'pt'
+        vectorDrawables.generatedDensities = ["mdpi", "hdpi", "xhdpi"]
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-dev"
+
+            // disable multi APK generation for development build
+            splits.abi.enable = false
+            splits.density.enable = false
+
+            buildConfigField 'String', 'API_URL', endpoints.dev
+        }
+        release {
+            shrinkResources true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            buildConfigField 'String', 'API_URL', endpoints.prod
+        }
+    }
+
+    androidExtensions {
+        experimental = true
+    }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    lintOptions {
+        quiet true
+        abortOnError false
+        disable 'InvalidPackage'
+    }
+
+    testOptions {
+        animationsDisabled = true
+        unitTests {
+            returnDefaultValues = true
+            includeAndroidResources = true
+            all {
+                testLogging {
+                    exceptionFormat "full"
+                    events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+                    outputs.upToDateWhen { false }
+                    showStandardStreams = true
+                }
+            }
+        }
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        main.java.srcDirs += [file("$buildDir/generated/source/kapt/main")]
+        test.java.srcDirs += 'src/test/kotlin'
+        test.java.srcDirs += "$projectDir/src/testCommon"
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+        androidTest.java.srcDirs += "$projectDir/src/testCommon"
+    }
+}
+
+dependencies {
+    
+    rootProject.kotlinDependencies.each { lib -> add(lib.configuration, lib.dependency)}
+    rootProject.androidDependencies.each { lib -> add(lib.configuration, lib.dependency) }
+    rootProject.networkDependencies.each { lib -> add(lib.configuration, lib.dependency) }
+    rootProject.hiltDependencies.each { lib -> add(lib.configuration, lib.dependency) }
+    rootProject.developmentDependencies.each { lib -> add(lib.configuration, lib.dependency) }
+
+    rootProject.unitTestDependencies.each { lib -> add(lib.configuration, lib.dependency) }
+    rootProject.androidTestDependencies.each { lib -> add(lib.configuration, lib.dependency) }
+
+}
+
+hilt {
+    enableTransformForLocalTests = true
+}

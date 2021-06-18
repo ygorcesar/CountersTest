@@ -1,0 +1,22 @@
+ext {
+
+    def versionMajor = 1
+    def versionMinor = 0
+    def versionPatch = 0
+    def appVersionCode = versionMajor * 10000 + versionMinor * 100 + versionPatch
+
+    android = [
+            applicationId    : "com.cornershop.counterstest",
+            buildToolsVersion: "30.0.3",
+            minSdkVersion    : 23,
+            targetSdkVersion : 30,
+            compileSdkVersion: 30,
+            versionCode      : appVersionCode,
+            versionName      : "$versionMajor.$versionMinor.$versionPatch"
+    ]
+
+    endpoints = [
+            dev : "\"http://10.0.0.100:3000/api/\"",
+            prod: "\"http://api.counter.com/api/\"",
+    ]
+}
