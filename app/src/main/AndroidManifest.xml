@@ -17,7 +17,7 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".presentation.welcome.WelcomeActivity"
+            android:name=".welcome.WelcomeActivity"
             android:theme="@style/Theme.CountersWelcome">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

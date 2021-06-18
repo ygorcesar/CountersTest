@@ -123,6 +123,7 @@ ext {
             [configuration: "implementation", dependency: okHttp],
             [configuration: "implementation", dependency: okHttpInterceptor],
             [configuration: "implementation", dependency: okHttpConverter],
+            [configuration: "implementation", dependency: rxJava],
     ]
 
     hiltDependencies = [
