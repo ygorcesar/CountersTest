@@ -11,7 +11,9 @@ class CountersInteractor @Inject constructor(
     private val infrastructure: CounterInfrastructure
 ) {
 
-    fun getCounters(): Single<List<Counter>> = infrastructure.getCounters()
+    fun getCounters(
+        fetchFromRemote: Boolean
+    ): Single<List<Counter>> = infrastructure.getCounters(fetchFromRemote)
 
     fun addCounter(request: CounterRequestAdd): Single<List<Counter>> = when {
         request.title.isBlank() -> Single.error(CounterBusiness.InvalidEmptyTitle)

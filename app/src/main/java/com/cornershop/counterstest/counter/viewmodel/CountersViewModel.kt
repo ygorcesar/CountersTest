@@ -22,8 +22,8 @@ class CountersViewModel @Inject constructor(
     private val _responseState = MutableLiveData<StateMachineEvent<List<Counter>>>()
     val responseState: LiveData<StateMachineEvent<List<Counter>>> get() = _responseState
 
-    fun getCounters() {
-        interactor.getCounters()
+    fun getCounters(fetchFromRemote: Boolean = true) {
+        interactor.getCounters(fetchFromRemote)
             .observeOnBack()
             .subscribe(_responseState)
             .addToComposite(compositeDisposable)

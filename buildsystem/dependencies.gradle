@@ -52,14 +52,12 @@ ext {
     retrofitVersion = '2.9.0'
     okHttpVersion = '4.9.1'
     okHttpConverterVersion = '0.8.0'
-    rxJavaVersion = '2.2.21'
 
     retrofit = "com.squareup.retrofit2:retrofit:${retrofitVersion}"
     retrofitRxAdapter = "com.squareup.retrofit2:adapter-rxjava2:${retrofitVersion}"
     okHttp = "com.squareup.okhttp3:okhttp:${okHttpVersion}"
     okHttpInterceptor = "com.squareup.okhttp3:logging-interceptor:${okHttpVersion}"
     okHttpConverter = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${okHttpConverterVersion}"
-    rxJava = "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
     //endregion
 
     // region dependency injection
@@ -97,7 +95,9 @@ ext {
     //endregion
 
     // region development dependencies
+    rxJavaVersion = '2.2.21'
     timberVersion = '4.7.1'
+    rxJava = "io.reactivex.rxjava2:rxjava:${rxJavaVersion}"
     timber = "com.jakewharton.timber:timber:${timberVersion}"
     //endregion
 
@@ -123,7 +123,6 @@ ext {
             [configuration: "implementation", dependency: okHttp],
             [configuration: "implementation", dependency: okHttpInterceptor],
             [configuration: "implementation", dependency: okHttpConverter],
-            [configuration: "implementation", dependency: rxJava],
     ]
 
     hiltDependencies = [
@@ -132,6 +131,7 @@ ext {
     ]
 
     developmentDependencies = [
+            [configuration: "implementation", dependency: rxJava],
             [configuration: "implementation", dependency: timber],
     ]
 
