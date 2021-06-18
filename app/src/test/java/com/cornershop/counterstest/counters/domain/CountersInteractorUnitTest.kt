@@ -37,7 +37,7 @@ class CountersInteractorUnitTest : BaseTests() {
         stubInfrastructureCounters(Single.just(expected))
 
         // when
-        val testObserver = interactor.getCounters().test()
+        val testObserver = interactor.getCounters(fetchFromRemote = true).test()
 
         // then
         testObserver.assertCompleted(expected)
@@ -50,7 +50,7 @@ class CountersInteractorUnitTest : BaseTests() {
         stubInfrastructureCounters(Single.error(expected))
 
         // when
-        val testObserver = interactor.getCounters().test()
+        val testObserver = interactor.getCounters(fetchFromRemote = true).test()
 
         // then
         testObserver.assertWithError(expected)
@@ -183,7 +183,7 @@ class CountersInteractorUnitTest : BaseTests() {
     }
 
     private fun stubInfrastructureCounters(counters: Single<List<Counter>>) {
-        every { mockInfrastructure.getCounters() } returns counters
+        every { mockInfrastructure.getCounters(any()) } returns counters
     }
 
     private fun stubInfrastructureAddCounter(counters: Single<List<Counter>>) {

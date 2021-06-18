@@ -71,6 +71,6 @@ class CountersViewModelUnitTest : BaseViewModelTests() {
     }
 
     private fun stubInteractorCounters(counters: Single<List<Counter>>) {
-        every { mockInteractor.getCounters() } returns counters
+        every { mockInteractor.getCounters(any()) } returns counters
     }
 }
