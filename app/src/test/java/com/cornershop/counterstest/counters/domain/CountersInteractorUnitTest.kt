@@ -4,6 +4,7 @@ import com.cornershop.counterstest.base.BaseTests
 import com.cornershop.counterstest.counter.data.CounterInfrastructure
 import com.cornershop.counterstest.counter.data.CounterRequest
 import com.cornershop.counterstest.counter.data.CounterRequestAdd
+import com.cornershop.counterstest.counter.data.CounterService
 import com.cornershop.counterstest.counter.domain.CounterBusiness
 import com.cornershop.counterstest.counter.domain.CountersInteractor
 import com.cornershop.counterstest.counter.model.Counter
@@ -19,7 +20,7 @@ import org.junit.Test
 class CountersInteractorUnitTest : BaseTests() {
 
     @MockK(relaxed = true)
-    lateinit var mockInfrastructure: CounterInfrastructure
+    lateinit var mockInfrastructure: CounterService
 
     private lateinit var interactor: CountersInteractor
 

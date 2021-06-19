@@ -1,5 +1,7 @@
 package com.cornershop.counterstest.counter.di
 
+import com.cornershop.counterstest.counter.data.CounterInfrastructure
+import com.cornershop.counterstest.counter.data.CounterService
 import com.cornershop.counterstest.counter.data.CountersGateway
 import dagger.Module
 import dagger.Provides
@@ -13,5 +15,8 @@ import retrofit2.create
 object CountersModule {
 
     @Provides
-    fun provideCountersService(retrofit: Retrofit): CountersGateway = retrofit.create()
+    fun provideCountersGateway(retrofit: Retrofit): CountersGateway = retrofit.create()
+
+    @Provides
+    fun provideCounterService(infrastructure: CounterInfrastructure): CounterService = infrastructure
 }

@@ -6,8 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.cornershop.counterstest.counter.domain.CountersInteractor
 import com.cornershop.counterstest.counter.model.Counter
 import com.cornershop.counterstest.utils.data.StateMachineEvent
-import com.cornershop.counterstest.utils.extensions.observeOnBack
-import com.cornershop.counterstest.utils.extensions.subscribe
+import com.cornershop.counterstest.utils.extensions.subscribeOnViewModel
 import com.cornershop.counterstest.utils.extensions.addToComposite
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.CompositeDisposable
@@ -24,8 +23,7 @@ class CountersViewModel @Inject constructor(
 
     fun getCounters(fetchFromRemote: Boolean = true) {
         interactor.getCounters(fetchFromRemote)
-            .observeOnBack()
-            .subscribe(_countersState)
+            .subscribeOnViewModel(_countersState)
             .addToComposite(compositeDisposable)
     }
 }

@@ -16,12 +16,13 @@ fun <T> Single<T>.observeOnBack(): Single<T> {
     return this.observeOn(Schedulers.io())
 }
 
-fun <T> Single<T>.subscribe(
+fun <T> Single<T>.subscribeOnViewModel(
     responseState: MutableLiveData<StateMachineEvent<T>>,
     onSuccess: (T) -> Unit = {},
     onError: (Throwable) -> Unit = {}
 ): Disposable {
-    return doOnSubscribe { responseState.postValue(StateMachineEvent.Start) }
+    return observeOnBack()
+        .doOnSubscribe { responseState.postValue(StateMachineEvent.Start) }
         .subscribe({ response ->
             onSuccess(response)
             responseState.postValue(StateMachineEvent.Success(response))
