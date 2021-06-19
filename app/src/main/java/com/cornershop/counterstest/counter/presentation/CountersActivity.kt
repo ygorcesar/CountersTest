@@ -9,14 +9,19 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.cornershop.counterstest.counter.model.Counter
+import com.cornershop.counterstest.counter.presentation.entries.CounterEmptyEntry
 import com.cornershop.counterstest.counter.presentation.entries.CounterEntryHandler
 import com.cornershop.counterstest.counter.viewmodel.CountersViewModel
 import com.cornershop.counterstest.databinding.CountersActivityBinding
 import com.cornershop.counterstest.utils.data.StateMachineEvent
+import com.cornershop.counterstest.utils.extensions.addToComposite
 import com.cornershop.counterstest.utils.extensions.observe
+import com.cornershop.counterstest.utils.extensions.observeTextChange
 import com.cornershop.counterstest.utils.extensions.viewBinding
 import com.xwray.groupie.GroupieAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.disposables.CompositeDisposable
+import timber.log.Timber
 
 @AndroidEntryPoint
 class CountersActivity : AppCompatActivity(), CounterEntryHandler {
@@ -24,6 +29,7 @@ class CountersActivity : AppCompatActivity(), CounterEntryHandler {
     private val binding by viewBinding(CountersActivityBinding::inflate)
     private val viewModel by viewModels<CountersViewModel>()
     private val groupAdapter by lazy { GroupieAdapter() }
+    private val compositeDisposable by lazy { CompositeDisposable() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +42,14 @@ class CountersActivity : AppCompatActivity(), CounterEntryHandler {
     private fun setupViews() = with(binding) {
         recyclerView.adapter = groupAdapter
         addCounter.setOnClickListener { navigateToAddCounter() }
+        search.observeTextChange()
+            .subscribe(viewModel::filterByQuery, Timber::e)
+            .addToComposite(compositeDisposable)
     }
 
     private fun setupObservers() = with(viewModel) {
         observe(countersState, ::onCountersStateChanged)
+        observe(counterNotFound, ::onCounterNotFoundChanged)
     }
 
     private fun getCounters() {
@@ -55,6 +65,13 @@ class CountersActivity : AppCompatActivity(), CounterEntryHandler {
     private fun showCounters(counters: List<Counter>) {
         loading(false)
         groupAdapter.update(CountersPresentation(counters, this).entries)
+    }
+
+    private fun onCounterNotFoundChanged(counterNotFound: Boolean) {
+        loading(false)
+        if (counterNotFound) {
+            groupAdapter.update(listOf(CounterEmptyEntry(isSearchingByQuery = true)))
+        }
     }
 
     private fun showError(error: Throwable, onRetry: () -> Unit) = with(binding) {
