@@ -8,16 +8,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import com.cornershop.counterstest.R
 import com.cornershop.counterstest.counter.model.Counter
 import com.cornershop.counterstest.counter.presentation.entries.CounterEmptyEntry
 import com.cornershop.counterstest.counter.presentation.entries.CounterEntryHandler
 import com.cornershop.counterstest.counter.viewmodel.CountersViewModel
 import com.cornershop.counterstest.databinding.CountersActivityBinding
+import com.cornershop.counterstest.utils.data.NetworkError
 import com.cornershop.counterstest.utils.data.StateMachineEvent
-import com.cornershop.counterstest.utils.extensions.addToComposite
-import com.cornershop.counterstest.utils.extensions.observe
-import com.cornershop.counterstest.utils.extensions.observeTextChange
-import com.cornershop.counterstest.utils.extensions.viewBinding
+import com.cornershop.counterstest.utils.extensions.*
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.xwray.groupie.GroupieAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.CompositeDisposable
@@ -30,6 +30,7 @@ class CountersActivity : AppCompatActivity(), CounterEntryHandler {
     private val viewModel by viewModels<CountersViewModel>()
     private val groupAdapter by lazy { GroupieAdapter() }
     private val compositeDisposable by lazy { CompositeDisposable() }
+    private var onRetryChangeCounterCount: () -> Unit = { }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +50,9 @@ class CountersActivity : AppCompatActivity(), CounterEntryHandler {
 
     private fun setupObservers() = with(viewModel) {
         observe(countersState, ::onCountersStateChanged)
+        observe(changeCounterCountState, ::onChangeCounterCountChanged)
         observe(counterNotFound, ::onCounterNotFoundChanged)
+        observe(warnAboutConnection, ::warnAboutConnection)
     }
 
     private fun getCounters() {
@@ -61,6 +64,16 @@ class CountersActivity : AppCompatActivity(), CounterEntryHandler {
         is StateMachineEvent.Success -> showCounters(event.value)
         is StateMachineEvent.Failure -> showError(event.exception, ::getCounters)
     }
+
+    private fun onChangeCounterCountChanged(event: StateMachineEvent<List<Counter>>) =
+        when (event) {
+            StateMachineEvent.Start -> loading(true)
+            is StateMachineEvent.Success -> showCounters(event.value)
+            is StateMachineEvent.Failure -> showAlertError(
+                event.exception,
+                onRetryChangeCounterCount
+            )
+        }
 
     private fun showCounters(counters: List<Counter>) {
         loading(false)
@@ -74,9 +87,35 @@ class CountersActivity : AppCompatActivity(), CounterEntryHandler {
         }
     }
 
+    private fun warnAboutConnection(unit: Unit) {
+        snackBar(R.string.connection_error_description)
+    }
+
     private fun showError(error: Throwable, onRetry: () -> Unit) = with(binding) {
         loading(false)
         errorView.showError(error, onRetry)
+    }
+
+    private fun showAlertError(error: Throwable, onRetry: () -> Unit) {
+        loading(false)
+        val counterToUpdate = viewModel.counterToUpdate
+        val title = getString(
+            R.string.error_updating_counter_title,
+            counterToUpdate?.title.orEmpty(),
+            counterToUpdate?.count ?: 0
+        )
+        val message = when (error) {
+            NetworkError -> R.string.connection_error_description
+            else -> R.string.error_default_description
+        }
+
+        MaterialAlertDialogBuilder(this, R.style.AlertDialogTheme)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton(R.string.ok) { _, _ -> }
+            .setNegativeButton(R.string.retry) { _, _ -> onRetry() }
+            .create()
+            .show()
     }
 
     private fun loading(isLoading: Boolean) = with(binding) {
@@ -85,12 +124,14 @@ class CountersActivity : AppCompatActivity(), CounterEntryHandler {
         recyclerView.isVisible = isLoading.not()
     }
 
-    override fun onCounterDecrement(counterId: String) {
-        // TODO
+    override fun onCounterIncrement(counter: Counter) {
+        onRetryChangeCounterCount = { viewModel.incrementCounter(counter) }
+            .also { it.invoke() }
     }
 
-    override fun onCounterIncrement(counterId: String) {
-        // TODO
+    override fun onCounterDecrement(counter: Counter) {
+        onRetryChangeCounterCount = { viewModel.decrementCounter(counter) }
+            .also { it.invoke() }
     }
 
     override fun onCounterSelected() {

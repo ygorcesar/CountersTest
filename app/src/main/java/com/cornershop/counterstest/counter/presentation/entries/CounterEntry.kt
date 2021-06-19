@@ -21,10 +21,10 @@ class CounterEntry(
         counterCount.text = counter.count.toString()
         counterControls.isVisible = counter.isSelected.not()
         counterCheckedIcon.isVisible = counter.isSelected
-        counterInc.setOnClickListener { handler.onCounterIncrement(counter.id) }
+        counterInc.setOnClickListener { handler.onCounterIncrement(counter) }
         counterDec.apply {
             isEnabled = counter.hasCount
-            setOnClickListener { this@CounterEntry.handler.onCounterDecrement(counter.id) }
+            setOnClickListener { this@CounterEntry.handler.onCounterDecrement(counter) }
         }
         root.setOnLongClickListener {
             counter.toggleSelected()

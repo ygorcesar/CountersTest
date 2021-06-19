@@ -36,7 +36,7 @@
     <string name="error_default_description">Something went wrong =S</string>
     <string name="error_load_counters_title">Couldn’t load the counters</string>
     <string name="error_creating_counter_title">Couldn’t create the counter</string>
-    <string name="error_updating_counter_title">Couldn’t update the “%s” counter to %d</string>
+    <string name="error_updating_counter_title">Couldn’t update the “%1$s” counter to %2$d</string>
     <string name="error_deleting_counter_title">Couldn’t delete the counter</string>
     <string name="error_invalid_counter_empty_title">You should inform a title</string>
     <string name="error_invalid_counter_title_size">The title must contains more than 1 characters</string>

@@ -1,8 +1,10 @@
 package com.cornershop.counterstest.counter.presentation.entries
 
+import com.cornershop.counterstest.counter.model.Counter
+
 interface CounterEntryHandler {
 
     fun onCounterSelected()
-    fun onCounterIncrement(counterId: String)
-    fun onCounterDecrement(counterId: String)
+    fun onCounterIncrement(counter: Counter)
+    fun onCounterDecrement(counter: Counter)
 }

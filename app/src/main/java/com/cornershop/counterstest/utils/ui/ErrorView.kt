@@ -20,6 +20,7 @@ class ErrorView @JvmOverloads constructor(
         gravity = Gravity.CENTER
         isClickable = true
         isFocusable = true
+        setBackgroundColor(context.getColor(R.color.white))
         View.inflate(context, R.layout.error_view, this)
     }
 
