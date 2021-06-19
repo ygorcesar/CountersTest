@@ -1,8 +1,10 @@
 package com.cornershop.counterstest.counter.presentation
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -33,6 +35,7 @@ class CountersActivity : AppCompatActivity(), CounterEntryHandler {
 
     private fun setupViews() = with(binding) {
         recyclerView.adapter = groupAdapter
+        addCounter.setOnClickListener { navigateToAddCounter() }
     }
 
     private fun setupObservers() = with(viewModel) {
@@ -60,6 +63,7 @@ class CountersActivity : AppCompatActivity(), CounterEntryHandler {
     }
 
     private fun loading(isLoading: Boolean) = with(binding) {
+        errorView.isVisible = false
         progressLoading.isVisible = isLoading
         recyclerView.isVisible = isLoading.not()
     }
@@ -75,6 +79,16 @@ class CountersActivity : AppCompatActivity(), CounterEntryHandler {
     override fun onCounterSelected() {
         groupAdapter.notifyDataSetChanged()
     }
+
+    private fun navigateToAddCounter() {
+        val intent = CreateCounterActivity.newInstance(this)
+        resultLauncher.launch(intent)
+    }
+
+    private var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) getCounters()
+        }
 
     companion object {
 

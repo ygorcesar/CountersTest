@@ -28,6 +28,7 @@
 —Willie Nelson</string>
     <string name="search_counters">Search Counters</string>
     <string name="add_counters">Add counters</string>
+    <string name="added_counter_with_success">Counter added with success!</string>
     <string name="n_items">%1$d items</string>
     <string name="n_times">%1$d times</string>
     <string name="n_selected">%d selected</string>
@@ -37,6 +38,8 @@
     <string name="error_creating_counter_title">Couldn’t create the counter</string>
     <string name="error_updating_counter_title">Couldn’t update the “%s” counter to %d</string>
     <string name="error_deleting_counter_title">Couldn’t delete the counter</string>
+    <string name="error_invalid_counter_empty_title">You should inform a title</string>
+    <string name="error_invalid_counter_title_size">The title must contains more than 1 characters</string>
     <string name="connection_error_description">The Internet connection appears to be offline.</string>
     <string name="generic_error_description">There has been a problem.</string>
     <string name="retry">Retry</string>

@@ -26,7 +26,13 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".counter.presentation.CountersActivity" />
+        <activity
+            android:name=".counter.presentation.CountersActivity"
+            android:theme="@style/Theme.CountersWelcome" />
+
+        <activity
+            android:name=".counter.presentation.CreateCounterActivity"
+            android:theme="@style/Theme.CountersWelcome" />
     </application>
 
 </manifest>

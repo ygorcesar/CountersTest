@@ -17,4 +17,23 @@
     <style name="Theme.CountersWelcome" parent="Theme.CountersNormal">
         <item name="android:windowBackground">@color/welcome_background</item>
     </style>
+
+    <style name="EditTextThemeAccent" parent="ThemeOverlay.AppCompat">
+        <item name="colorAccent">@color/orange</item>
+    </style>
+
+    <!--region alert dialog-->
+    <style name="AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+    </style>
+
+    <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/orange</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/orange</item>
+    </style>
+    <!--endregion-->
 </resources>
