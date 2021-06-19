@@ -2,6 +2,7 @@ package com.cornershop.counterstest.utils.extensions
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -52,3 +53,10 @@ fun Activity.snackBar(
             onDismissed()
         }
     }).show()
+
+fun Intent.clearBackStackFlags(): Intent {
+    return apply {
+        addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    }
+}

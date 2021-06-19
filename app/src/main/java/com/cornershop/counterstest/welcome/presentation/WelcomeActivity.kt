@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.cornershop.counterstest.counter.presentation.CountersActivity
 import com.cornershop.counterstest.databinding.WelcomeActivityBinding
 import com.cornershop.counterstest.utils.data.StateMachineEvent
+import com.cornershop.counterstest.utils.extensions.clearBackStackFlags
 import com.cornershop.counterstest.utils.extensions.observe
 import com.cornershop.counterstest.utils.extensions.viewBinding
 import com.cornershop.counterstest.welcome.viewmodel.WelcomeViewModel
@@ -47,6 +48,7 @@ class WelcomeActivity : AppCompatActivity() {
 
     private fun navigateToHome() {
         val intent = CountersActivity.newInstance(this)
+            .clearBackStackFlags()
         startActivity(intent)
     }
 }
