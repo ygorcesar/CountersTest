@@ -36,7 +36,6 @@ class CountersViewModel @Inject constructor(
 
     fun getCounters(fetchFromRemote: Boolean = true) {
         interactor.getCounters(fetchFromRemote)
-            .doOnSuccess { counters -> this.counters = counters }
             .onErrorResumeNext { error ->
                 if (error is NetworkError) {
                     interactor.getCounters(fetchFromRemote = false)
@@ -46,7 +45,9 @@ class CountersViewModel @Inject constructor(
                             } else _warnAboutConnection.postValue(Unit)
                         }
                 } else Single.error(error)
-            }.subscribeOnViewModel(_countersState)
+            }
+            .doOnSuccess { counters -> this.counters = counters }
+            .subscribeOnViewModel(_countersState)
             .addToComposite(compositeDisposable)
     }
 
