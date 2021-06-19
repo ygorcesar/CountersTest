@@ -25,14 +25,18 @@ class CountersViewModel @Inject constructor(
     private val _warnAboutConnection = MutableLiveData<Unit>()
 
     private val _counterNotFound = MutableLiveData<Boolean>()
+    private val _countersSelected = MutableLiveData<MutableList<Counter>>()
     private val _countersState = MutableLiveData<StateMachineEvent<List<Counter>>>()
     private val _changeCounterCountState = MutableLiveData<StateMachineEvent<List<Counter>>>()
+    private val _deleteCountersState = MutableLiveData<StateMachineEvent<List<Counter>>>()
 
     var counterToUpdate: Counter? = null
     val warnAboutConnection: LiveData<Unit> get() = _warnAboutConnection
     val counterNotFound: LiveData<Boolean> get() = _counterNotFound
+    val countersSelected: LiveData<MutableList<Counter>> get() = _countersSelected
     val countersState: LiveData<StateMachineEvent<List<Counter>>> get() = _countersState
     val changeCounterCountState: LiveData<StateMachineEvent<List<Counter>>> get() = _changeCounterCountState
+    val deleteCountersState: LiveData<StateMachineEvent<List<Counter>>> get() = _deleteCountersState
 
     fun getCounters(fetchFromRemote: Boolean = true) {
         interactor.getCounters(fetchFromRemote)
@@ -69,6 +73,17 @@ class CountersViewModel @Inject constructor(
             .addToComposite(compositeDisposable)
     }
 
+    fun deleteSelectedCounters() {
+        val jobs = countersSelected.value?.map { counter ->
+            val request = CounterRequest(counter.id)
+            interactor.deleteCounter(request)
+        } ?: return
+        Single.merge(jobs)
+            .doOnComplete { clearSelectedCounters() }
+            .subscribeOnViewModel(_deleteCountersState)
+            .addToComposite(compositeDisposable)
+    }
+
     fun filterByQuery(query: String) {
         val filteredCounters = counters.filter { counter ->
             counter.title.contains(query, ignoreCase = true) || query.isBlank()
@@ -79,5 +94,17 @@ class CountersViewModel @Inject constructor(
             _counterNotFound.postValue(false)
             _countersState.postValue(StateMachineEvent.Success(filteredCounters))
         }
+    }
+
+    fun toggleSelectedCounter(counter: Counter) {
+        val counters = _countersSelected.value ?: mutableListOf()
+        if (counter.isSelected) counters.add(counter)
+        else counters.remove(counter)
+        _countersSelected.postValue(counters)
+    }
+
+    fun clearSelectedCounters() {
+        _countersSelected.value?.forEach { it.isSelected = false }
+        _countersSelected.postValue(mutableListOf())
     }
 }

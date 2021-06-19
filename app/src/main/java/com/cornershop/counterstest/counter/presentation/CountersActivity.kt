@@ -43,6 +43,16 @@ class CountersActivity : AppCompatActivity(), CounterEntryHandler {
     private fun setupViews() = with(binding) {
         recyclerView.adapter = groupAdapter
         addCounter.setOnClickListener { navigateToAddCounter() }
+        toolbar.apply {
+            setNavigationOnClickListener { viewModel.clearSelectedCounters() }
+            setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.action_delete -> deleteCounters().let { true }
+                    R.id.action_share -> shareCounters().let { true }
+                    else -> false
+                }
+            }
+        }
         search.observeTextChange()
             .subscribe(viewModel::filterByQuery, Timber::e)
             .addToComposite(compositeDisposable)
@@ -50,7 +60,9 @@ class CountersActivity : AppCompatActivity(), CounterEntryHandler {
 
     private fun setupObservers() = with(viewModel) {
         observe(countersState, ::onCountersStateChanged)
+        observe(countersSelected, ::onSelectedCountersChanged)
         observe(changeCounterCountState, ::onChangeCounterCountChanged)
+        observe(deleteCountersState, ::onDeleteCountersChanged)
         observe(counterNotFound, ::onCounterNotFoundChanged)
         observe(warnAboutConnection, ::warnAboutConnection)
     }
@@ -69,11 +81,28 @@ class CountersActivity : AppCompatActivity(), CounterEntryHandler {
         when (event) {
             StateMachineEvent.Start -> loading(true)
             is StateMachineEvent.Success -> showCounters(event.value)
-            is StateMachineEvent.Failure -> showAlertError(
-                event.exception,
-                onRetryChangeCounterCount
+            is StateMachineEvent.Failure -> showErrorAsAlert(
+                error = event.exception,
+                onRetry = onRetryChangeCounterCount
             )
         }
+
+    private fun onDeleteCountersChanged(event: StateMachineEvent<List<Counter>>) = when (event) {
+        StateMachineEvent.Start -> loading(true)
+        is StateMachineEvent.Success -> showCounters(event.value)
+        is StateMachineEvent.Failure -> showErrorAsAlert(
+            error = event.exception,
+            onRetry = ::deleteCounters,
+            isDeletion = true
+        )
+    }
+
+    private fun onSelectedCountersChanged(counters: List<Counter>) = with(binding) {
+        search.isVisible = counters.isEmpty()
+        appBar.isVisible = counters.isNotEmpty()
+        toolbar.title = getString(R.string.n_selected, counters.size)
+        groupAdapter.notifyDataSetChanged()
+    }
 
     private fun showCounters(counters: List<Counter>) {
         loading(false)
@@ -96,14 +125,19 @@ class CountersActivity : AppCompatActivity(), CounterEntryHandler {
         errorView.showError(error, onRetry)
     }
 
-    private fun showAlertError(error: Throwable, onRetry: () -> Unit) {
+    private fun showErrorAsAlert(
+        error: Throwable,
+        onRetry: () -> Unit,
+        isDeletion: Boolean = false
+    ) {
         loading(false)
-        val counterToUpdate = viewModel.counterToUpdate
-        val title = getString(
-            R.string.error_updating_counter_title,
-            counterToUpdate?.title.orEmpty(),
-            counterToUpdate?.count ?: 0
-        )
+        val title = if (isDeletion) {
+            getString(R.string.error_deleting_counter_title)
+        } else {
+            val (counterTitle, count) = viewModel.counterToUpdate.let { it?.title.orEmpty() to it?.count }
+            getString(R.string.error_updating_counter_title, counterTitle, count)
+        }
+
         val message = when (error) {
             NetworkError -> R.string.connection_error_description
             else -> R.string.error_default_description
@@ -124,6 +158,21 @@ class CountersActivity : AppCompatActivity(), CounterEntryHandler {
         recyclerView.isVisible = isLoading.not()
     }
 
+    private fun deleteCounters() {
+        viewModel.deleteSelectedCounters()
+    }
+
+    private fun shareCounters() {
+        val counters = viewModel.countersSelected.value
+            ?.joinToString(
+                separator = "\n",
+                transform = { counter -> "${counter.count} x ${counter.title}" }
+            ) ?: return
+
+        val shareIntent = textShareIntent(counters, getString(R.string.share))
+        startActivity(shareIntent)
+    }
+
     override fun onCounterIncrement(counter: Counter) {
         onRetryChangeCounterCount = { viewModel.incrementCounter(counter) }
             .also { it.invoke() }
@@ -134,8 +183,9 @@ class CountersActivity : AppCompatActivity(), CounterEntryHandler {
             .also { it.invoke() }
     }
 
-    override fun onCounterSelected() {
+    override fun onCounterSelected(counter: Counter) {
         groupAdapter.notifyDataSetChanged()
+        viewModel.toggleSelectedCounter(counter)
     }
 
     private fun navigateToAddCounter() {

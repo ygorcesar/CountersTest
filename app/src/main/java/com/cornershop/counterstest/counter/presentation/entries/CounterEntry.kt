@@ -28,7 +28,7 @@ class CounterEntry(
         }
         root.setOnLongClickListener {
             counter.toggleSelected()
-            handler.onCounterSelected()
+            handler.onCounterSelected(counter)
             true
         }
     }

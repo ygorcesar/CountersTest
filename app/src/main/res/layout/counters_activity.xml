@@ -4,17 +4,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/search"
+    <FrameLayout
+        android:id="@+id/toolbarContainer"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_normal_1"
-        android:background="@color/white"
-        app:iconifiedByDefault="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:queryBackground="@color/white" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:elevation="@dimen/toolbar_elevation">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:backgroundTint="@color/white"
+                app:menu="@menu/counters_selection_menu"
+                app:navigationIcon="@drawable/ic_close"
+                app:titleTextColor="@color/gray" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_normal_1"
+            android:background="@color/white"
+            app:iconifiedByDefault="false"
+            app:queryBackground="@color/white" />
+
+    </FrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -27,7 +52,7 @@
         app:layout_constraintBottom_toTopOf="@id/addCounter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search" />
+        app:layout_constraintTop_toBottomOf="@id/toolbarContainer" />
 
     <com.cornershop.counterstest.utils.ui.ErrorView
         android:id="@+id/errorView"
@@ -37,7 +62,7 @@
         app:layout_constraintBottom_toTopOf="@id/addCounter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search" />
+        app:layout_constraintTop_toBottomOf="@id/toolbarContainer" />
 
     <ProgressBar
         android:id="@+id/progressLoading"
@@ -48,7 +73,7 @@
         app:layout_constraintBottom_toTopOf="@id/addCounter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/search" />
+        app:layout_constraintTop_toBottomOf="@id/toolbarContainer" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/addCounter"

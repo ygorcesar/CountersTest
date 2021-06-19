@@ -31,7 +31,7 @@
     <string name="added_counter_with_success">Counter added with success!</string>
     <string name="n_items">%1$d items</string>
     <string name="n_times">%1$d times</string>
-    <string name="n_selected">%d selected</string>
+    <string name="n_selected">%1$d selected</string>
     <string name="error_default_title">Opssss!</string>
     <string name="error_default_description">Something went wrong =S</string>
     <string name="error_load_counters_title">Couldn’t load the counters</string>

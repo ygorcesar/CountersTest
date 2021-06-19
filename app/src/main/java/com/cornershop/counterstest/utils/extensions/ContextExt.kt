@@ -60,3 +60,12 @@ fun Intent.clearBackStackFlags(): Intent {
         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     }
 }
+
+fun textShareIntent(text: String, title: String? = null): Intent {
+    val sendIntent = Intent().apply {
+        action = Intent.ACTION_SEND
+        putExtra(Intent.EXTRA_TEXT, text)
+        type = "text/plain"
+    }
+    return Intent.createChooser(sendIntent, title)
+}
