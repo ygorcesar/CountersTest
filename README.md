@@ -53,7 +53,7 @@ $ npm start
   - Persistence, network requests, raw model, mappers ... in **data**
   - Dependency injection in **di**
 
-- All json files to use on tests are in **[resources](app/src/test/resources)** folder
+- All json files to use on tests with **mockwebserver** is on **[resources](app/src/test/resources)** folder
 
 # Test definitions and instructions
 
