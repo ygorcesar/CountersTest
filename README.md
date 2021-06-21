@@ -1,6 +1,9 @@
 # Cornershop Android Development Test
 
 
+https://user-images.githubusercontent.com/6981335/122708109-c7aa7680-d231-11eb-9f98-8d9713ca11ec.mp4
+
+
 ## Getting started
 
 - Clone this repository and import into **Android Studio**:
@@ -19,6 +22,8 @@
 ## Run the code
 
 - Just clone the repo and execute!
+
+- Update endpoints base urls if needs on **[configurations.gradle](buildsystem/configurations.gradle)** file
 
 - Unit Tests: `gradlew test`
 
