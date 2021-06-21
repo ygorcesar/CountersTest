@@ -1,7 +1,6 @@
 package com.cornershop.counterstest.counters.domain
 
 import com.cornershop.counterstest.base.BaseTests
-import com.cornershop.counterstest.counter.data.CounterInfrastructure
 import com.cornershop.counterstest.counter.data.CounterRequest
 import com.cornershop.counterstest.counter.data.CounterRequestAdd
 import com.cornershop.counterstest.counter.data.CounterService

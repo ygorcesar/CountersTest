@@ -37,7 +37,8 @@
             android:layout_margin="@dimen/margin_normal_1"
             android:background="@color/white"
             app:iconifiedByDefault="false"
-            app:queryBackground="@color/white" />
+            app:queryBackground="@color/white"
+            app:queryHint="@string/search_counters" />
 
     </FrameLayout>
 

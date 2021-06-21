@@ -21,10 +21,6 @@ fun <T> Single<T>.observeOnBack(): Single<T> {
     return this.observeOn(Schedulers.io())
 }
 
-fun <T> Flowable<T>.performOnBack(): Flowable<T> {
-    return this.subscribeOn(Schedulers.io())
-}
-
 fun <T> Flowable<T>.observeOnBack(): Flowable<T> {
     return this.observeOn(Schedulers.io())
 }
