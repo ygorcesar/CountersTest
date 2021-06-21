@@ -15,10 +15,7 @@ import com.cornershop.counterstest.counter.viewmodel.CreateCounterViewModel
 import com.cornershop.counterstest.databinding.CreateCounterActivityBinding
 import com.cornershop.counterstest.utils.data.NetworkError
 import com.cornershop.counterstest.utils.data.StateMachineEvent
-import com.cornershop.counterstest.utils.extensions.hideKeyboard
-import com.cornershop.counterstest.utils.extensions.observe
-import com.cornershop.counterstest.utils.extensions.snackBar
-import com.cornershop.counterstest.utils.extensions.viewBinding
+import com.cornershop.counterstest.utils.extensions.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,9 +33,15 @@ class CreateCounterActivity : AppCompatActivity() {
     }
 
     private fun setupViews() = with(binding) {
+        val seeSuggestionsDisclaimer = normal(getString(R.string.create_counter_disclaimer)) +
+                bold(underline(getString(R.string.create_counter_disclaimer_see_examples)))
+
         save.setOnClickListener { saveCounter() }
         close.setOnClickListener { finish() }
-        seeSuggestions.setOnClickListener { navigateToSeeSuggestions() }
+        seeSuggestions.apply {
+            text = seeSuggestionsDisclaimer
+            setOnClickListener { navigateToSeeSuggestions() }
+        }
     }
 
     private fun setupObservers() = with(viewModel) {

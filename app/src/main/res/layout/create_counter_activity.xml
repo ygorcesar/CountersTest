@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
@@ -82,11 +83,11 @@
         android:layout_marginTop="@dimen/margin_min_1"
         android:background="@drawable/ripple"
         android:padding="@dimen/margin_min_1"
-        android:text="@string/create_counter_disclaimer"
         android:textColor="@color/gray"
         android:textSize="@dimen/font_size_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/counterTitleInput" />
+        app:layout_constraintTop_toBottomOf="@id/counterTitleInput"
+        tools:text="@string/create_counter_disclaimer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
