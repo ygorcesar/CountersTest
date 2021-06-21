@@ -43,6 +43,10 @@ class CountersActivity : AppCompatActivity(), CounterEntryHandler {
     private fun setupViews() = with(binding) {
         recyclerView.adapter = groupAdapter
         addCounter.setOnClickListener { navigateToAddCounter() }
+        swipeRefresh.apply {
+            setColorSchemeResources(R.color.orange)
+            setOnRefreshListener { getCounters() }
+        }
         toolbar.apply {
             setNavigationOnClickListener { viewModel.clearSelectedCounters() }
             setOnMenuItemClickListener { menuItem ->
@@ -153,9 +157,13 @@ class CountersActivity : AppCompatActivity(), CounterEntryHandler {
     }
 
     private fun loading(isLoading: Boolean) = with(binding) {
-        errorView.isVisible = false
-        progressLoading.isVisible = isLoading
-        recyclerView.isVisible = isLoading.not()
+        if (swipeRefresh.isRefreshing) {
+            swipeRefresh.isRefreshing = isLoading
+        } else {
+            errorView.isVisible = false
+            progressLoading.isVisible = isLoading
+            recyclerView.isVisible = isLoading.not()
+        }
     }
 
     private fun deleteCounters() {

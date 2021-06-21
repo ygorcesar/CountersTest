@@ -30,6 +30,7 @@ ext {
     constraintLayoutVersion = '2.0.4'
     androidActivityKtxVersion = '1.2.3'
     androidCoreKtxVersion = '1.5.0'
+    swipeRefreshVersion = '1.1.0'
 
     appCompat = "androidx.appcompat:appcompat:${appCompatVersion}"
     materialDesign = "com.google.android.material:material:${materialDesignVersion}"
@@ -39,6 +40,7 @@ ext {
     lifecycleLiveData = "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
     androidActivityKtx = "androidx.activity:activity-ktx:${androidActivityKtxVersion}"
     androidCoreKtx = "androidx.core:core-ktx:${androidCoreKtxVersion}"
+    swipeRefresh = "androidx.swiperefreshlayout:swiperefreshlayout:${swipeRefreshVersion}"
     //endregion
 
     // region kotlin
@@ -113,6 +115,7 @@ ext {
             [configuration: "implementation", dependency: lifecycleLiveData],
             [configuration: "implementation", dependency: androidActivityKtx],
             [configuration: "implementation", dependency: androidCoreKtx],
+            [configuration: "implementation", dependency: swipeRefresh],
     ]
 
     kotlinDependencies = [
