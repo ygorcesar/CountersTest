@@ -9,7 +9,7 @@ const val SEARCH_DEBOUNCE_TIMEOUT = 500L
 
 fun SearchView.observeTextChange(): Observable<String> {
     val searchTextObservable = PublishSubject.create<String>()
-    this.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+    this.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?): Boolean = true
         override fun onQueryTextChange(newText: String?): Boolean {
             val query = newText.orEmpty()

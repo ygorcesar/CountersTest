@@ -72,6 +72,7 @@ class CountersActivity : AppCompatActivity(), CounterEntryHandler {
     }
 
     private fun getCounters() {
+        viewModel.clearSelectedCounters()
         viewModel.getCounters()
     }
 
@@ -103,7 +104,7 @@ class CountersActivity : AppCompatActivity(), CounterEntryHandler {
 
     private fun onSelectedCountersChanged(counters: List<Counter>) = with(binding) {
         search.isVisible = counters.isEmpty()
-        appBar.isVisible = counters.isNotEmpty()
+        toolbar.isVisible = counters.isNotEmpty()
         toolbar.title = getString(R.string.n_selected, counters.size)
         groupAdapter.notifyDataSetChanged()
     }

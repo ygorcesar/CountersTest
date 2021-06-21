@@ -27,7 +27,7 @@ class CreateCounterExamplesEntry(
             Chip(root.context).apply {
                 text = example
                 setTextColor(getColor(R.color.black))
-                setBackgroundColor(getColor(R.color.light_gray))
+                setChipBackgroundColorResource(R.color.light_gray)
                 setOnClickListener { onExampleClicked(example) }
             }
         }.forEach(chipGroup::addView)
