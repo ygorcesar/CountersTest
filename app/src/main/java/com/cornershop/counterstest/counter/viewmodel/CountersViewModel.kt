@@ -43,7 +43,10 @@ class CountersViewModel @Inject constructor(
             .onErrorResumeNext { error ->
                 if (error is NetworkError) {
                     interactor.getCounters(fetchFromRemote = false)
-                        .doOnSuccess { counters ->
+                        .flatMap { counters ->
+                            if (counters.isEmpty()) Single.error(error)
+                            else Single.just(counters)
+                        }.doOnSuccess { counters ->
                             if (counters.isEmpty()) {
                                 _countersState.postValue(StateMachineEvent.Failure(error))
                             } else _warnAboutConnection.postValue(Unit)

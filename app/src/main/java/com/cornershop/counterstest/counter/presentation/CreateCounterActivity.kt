@@ -56,8 +56,8 @@ class CreateCounterActivity : AppCompatActivity() {
     }
 
     private fun onCounterAddedWithSuccess() {
-        loading(false)
         snackBar(R.string.added_counter_with_success, onDismissed = {
+            loading(false)
             setResult(RESULT_OK)
             finish()
         })

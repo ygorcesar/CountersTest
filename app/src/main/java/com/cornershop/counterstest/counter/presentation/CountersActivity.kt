@@ -181,6 +181,11 @@ class CountersActivity : AppCompatActivity(), CounterEntryHandler {
         startActivity(shareIntent)
     }
 
+    override fun onBackPressed() {
+        if (binding.appBar.isVisible) viewModel.clearSelectedCounters()
+        else super.onBackPressed()
+    }
+
     override fun onCounterIncrement(counter: Counter) {
         onRetryChangeCounterCount = { viewModel.incrementCounter(counter) }
             .also { it.invoke() }

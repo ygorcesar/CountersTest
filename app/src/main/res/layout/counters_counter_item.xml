@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/state_counter_selected_item"
-    android:foreground="?attr/selectableItemBackground"
+    android:foreground="@drawable/ripple"
     android:minHeight="?attr/listPreferredItemHeight"
     android:orientation="horizontal"
     android:paddingHorizontal="@dimen/margin_normal_3"
