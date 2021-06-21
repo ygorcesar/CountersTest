@@ -1,5 +1,8 @@
 <resources>
     <!-- Examples -->
+    <string name="drinks">Drinks</string>
+    <string name="food">Food</string>
+    <string name="misc">Misc</string>
     <string-array name="drinks_array">
         <item>Cups of coffee</item>
         <item>Glasses of water</item>

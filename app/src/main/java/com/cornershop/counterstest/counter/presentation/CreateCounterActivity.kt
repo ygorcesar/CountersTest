@@ -1,8 +1,10 @@
 package com.cornershop.counterstest.counter.presentation
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -86,10 +88,21 @@ class CreateCounterActivity : AppCompatActivity() {
     }
 
     private fun navigateToSeeSuggestions() {
-
+        val intent = CreateCounterExamplesActivity.newInstance(this)
+        resultLauncher.launch(intent)
     }
 
+    private var resultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.getStringExtra(CREATE_COUNTER_EXAMPLE_KEY)?.let { example ->
+                    binding.counterTitleInput.editText?.setText(example)
+                }
+            }
+        }
+
     companion object {
+        const val CREATE_COUNTER_EXAMPLE_KEY = "create_counter_example_key"
 
         fun newInstance(context: Context) = Intent(context, CreateCounterActivity::class.java)
     }

@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.ComponentActivity
+import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.viewbinding.ViewBinding
@@ -29,6 +31,10 @@ fun <T : ViewBinding> T.getString(
     @StringRes stringResId: Int,
     vararg args: Any
 ) = this.root.context.getString(stringResId, *args)
+
+fun <T : ViewBinding> T.getColor(
+    @ColorRes colorResId: Int
+) = ContextCompat.getColor(root.context, colorResId)
 
 fun <T : Any, L : LiveData<T>> ComponentActivity.observe(liveData: L, action: (T) -> Unit) =
     liveData.observe(this, Observer(action))

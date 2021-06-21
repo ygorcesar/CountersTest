@@ -33,6 +33,10 @@
         <activity
             android:name=".counter.presentation.CreateCounterActivity"
             android:theme="@style/Theme.CountersWelcome" />
+
+        <activity
+            android:name=".counter.presentation.CreateCounterExamplesActivity"
+            android:theme="@style/Theme.CountersWelcome" />
     </application>
 
 </manifest>
