@@ -99,6 +99,7 @@ Bonus points:
 
 
 ## Install and start the server
+On **[server](server)** folder run the following commands:
 
 ```
 $ npm install
